@@ -18,13 +18,19 @@ module Chapter5.ExercisesSpec where
     r x = x
     
     co :: (b -> c) -> (a -> b) -> (a -> c)
-    co = undefined
+    co x y = \z -> x(y(z))
 
     a :: (a -> c) -> a -> a
-    a = undefined
+    a f a = a
     
     a' :: (a -> b) -> a -> b
-    a' = undefined
+    a' f = f 
+
+    f1 :: Char -> String
+    f1 x = [x] ++ [x]
+
+    f2 :: Int -> Char
+    f2 x = "Hello" !! x
 
     fstString :: String -> String
     fstString x = x ++ " in the rain"
@@ -68,9 +74,9 @@ module Chapter5.ExercisesSpec where
           it "should run without errors" $ c' 1 2 `shouldBe` 2
           it "should run without errors" $ c'' 1 2 `shouldBe` 1
           it "should run without errors" $ r "abc"  `shouldBe` "abc"
-    --      it "should run without errors" $ co `shouldBe` 
-    --      it "should run without errors" $ a `shouldBe` ???
-    --      it "should run without errors" $ a' `shouldBe` ???
+          it "should run without errors" $ co f1 f2 1 `shouldBe` "ee"
+          it "should run without errors" $ a (\x -> x + 1) 1 `shouldBe` 1
+          it "should run without errors" $ a' (\x -> x + 1) 1 `shouldBe` 2
         describe "Fix it" $ do
           it "should sing the first string" $ fstString "Singing" `shouldBe` "Singing in the rain"
           it "should sing the second string" $ sndString "Somewhere" `shouldBe` "Somewhere over the rainbow"
